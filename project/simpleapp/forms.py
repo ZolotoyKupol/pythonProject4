@@ -14,14 +14,14 @@ class PostsForm(forms.ModelForm):
             'category',
         ]
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     description = cleaned_data.get("description")
-    #     name = cleaned_data.get("name")
+    def clean(self):
+        cleaned_data = super().clean()
+        description = cleaned_data.get("description")
+        name = cleaned_data.get("name")
 
-        # if name == description:
-        # #     raise ValidationError(
-        # #         "Описание не должно быть идентично названию."
-        # #     )
-        # #
-        # return cleaned_data
+        if name == description:
+            raise ValidationError(
+                "Описание не должно быть идентично названию."
+            )
+
+        return cleaned_data
