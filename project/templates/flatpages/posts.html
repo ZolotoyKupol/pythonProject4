@@ -29,13 +29,21 @@ Posts
 
 
    <hr>
+
+   {% if perms.simpleapp.add_posts %}
+   <a href="{% url 'post_create' %}">Добавить товар</a>
+   {% endif %}
+
    {% if posts %}
        <table>
            <tr>
                <td>Название</td>
                <td>Описание</td>
                <td>Категория</td>
-               <td>Дата публикации</td>
+<!--               <td>Дата публикации</td>-->
+               {% if perms.simpleapp.change_posts or perms.simpleapp.delete_posts %}
+               <td>Действия</td>
+               {% endif %}
            </tr>
 
            {% for news in posts %}
@@ -44,7 +52,16 @@ Posts
                <td>{{ news.description|truncatechars:20|censor }}</td>
                <td>{{ news.category.name }}</td>
                <td>{{ news.date }}</td>
-               <!-- Используем наш фильтр -->
+
+               <td>
+                  {% if perms.simpleapp.change_product %}
+                  <a href="{% url 'post_update' pk=news.id %}">Изменить</a>
+                  {% endif %}
+                  {% if perms.simpleapp.delete_product %}
+                  <a href="{% url 'post_delete' news.id %}">Удалить</a>
+                  {% endif %}
+               </td>
+
            </tr>
            {% endfor %}
 
