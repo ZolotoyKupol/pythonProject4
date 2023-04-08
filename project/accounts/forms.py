@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
+from django.core.mail import send_mail
 
 
 class CustomSignupForm(SignupForm):
@@ -28,4 +29,9 @@ class CustomSignupForm(SignupForm):
         user = super().save(request)
         common_users = Group.objects.get(name="common users")
         user.groups.add(common_users)
+
+        subject = 'Добро пожаловать на наш новостной портал!'
+        message = f' {user.username}, вы успешно зарегистрированы!'
+        send_mail(subject, message, 'noreply@example.com', ['console'])
+
         return user
