@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'django_apscheduler',
     'celery',
-    'project',
 ]
 
 AUTHENTICATION_BACKENDS = [
